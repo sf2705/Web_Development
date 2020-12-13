@@ -6,7 +6,8 @@ import plotly.graph_objs as go
 def cleandata(dataset, keepcolumns = ['Country Name', '1990', '2015'], value_variables = ['1990', '2015']):
     """Clean world bank data for a visualizaiton dashboard
 
-    Keeps data range of dates in keep_columns variable and data for the top 10 economies
+    Keeps data range of dates in 
+    umns variable and data for the top 10 economies
     Reorients the columns into a year, country and value
     Saves the results to a csv file
 
@@ -160,10 +161,30 @@ def return_figures():
     # Make a bar chart showing the rural population of these countries ['United States', 'China', 'Japan', 'Germany', 'United Kingdom', 'India', 'France', 'Brazil', 'Italy', 'Canada'] in the year 2015.
     
     # HINT: you can use the clean_data() function. You'll need to specify the path to the csv file, and which columns you want to keep. The chart 2 code might help with understanding how to code this.
+    graph_five = []
+    df_five = cleandata('data/API_SP.RUR.TOTL_DS2_en_csv_v2_9914824.csv', ['Country Name', '2015'], ['2015'])
+    
+    df_five.columns = ['country', 'year', 'ruralpopulation']
+    df_five = df_five.sort_values('ruralpopulation', acsending = False)
     
     # TODO: once the data is clean, make a list called graph_five and append the plotly graph to this list.
     
+    graph_five.append(
+          go.Bar(
+          x = df_five['Country'].tolist(),
+          y = df_five['ruralpopulation'].tolist(),
+          text = text,
+          name = country,
+          textposition = 'top'
+          )
+      )
+    
     # TODO: fill a layout variable for the fifth visualization
+    layout_five = dict(title = 'Rural Population in 2015',
+                xaxis = dict(title = 'Country'),
+                yaxis = dict(title = 'Rural Population'),
+                )
+    
     
     # append all charts to the figures list
     figures = []
@@ -173,5 +194,6 @@ def return_figures():
     figures.append(dict(data=graph_four, layout=layout_four))
     
     # TODO: append the figure five information to the figures list
+    figures.append(dict(data=graph_five, layout=layout_five))
     
     return figures
