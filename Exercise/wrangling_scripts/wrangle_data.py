@@ -165,13 +165,13 @@ def return_figures():
     df_five = cleandata('data/API_SP.RUR.TOTL_DS2_en_csv_v2_9914824.csv', ['Country Name', '2015'], ['2015'])
     
     df_five.columns = ['country', 'year', 'ruralpopulation']
-    df_five = df_five.sort_values('ruralpopulation', acsending = False)
+    df_five = df_five.sort_values('ruralpopulation', ascending = False)
     
     # TODO: once the data is clean, make a list called graph_five and append the plotly graph to this list.
     
     graph_five.append(
           go.Bar(
-          x = df_five['Country'].tolist(),
+          x = df_five['country'].tolist(),
           y = df_five['ruralpopulation'].tolist(),
           text = text,
           name = country,
